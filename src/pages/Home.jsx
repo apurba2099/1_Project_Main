@@ -1,3 +1,5 @@
+import dashboard from "../assets/images/hero_dashboard_screenshot.png";
+
 import feat1 from "../assets/images/1_feature.png";
 import feat2 from "../assets/images/2_feature.png";
 import feat3 from "../assets/images/3_feature.png";
@@ -70,14 +72,14 @@ function Home() {
           </p>
 
           {/* Trust badge */}
-          <div className="inline-flex items-center gap-2 bg-white/[0.07] border border-white/[0.12] text-white/75 text-[13px] font-medium px-5 py-2 rounded-full mb-7 backdrop-blur-md">
-            <span className="text-amber-400">★</span> Trusted by engineering
-            teams worldwide
+          <div className="inline-flex items-center gap-2 bg-black border border-[#4a3afd] text-white/75 text-[11px] font-medium px-5 py-1 rounded-full mb-7 backdrop-blur-md">
+            <span className="text-[#817ffe] font-thin">★</span> Trusted by
+            engineering teams worldwide
           </div>
 
           {/* CTA button */}
           <div className="mb-[52px]">
-            <button className="text-[15px] font-semibold px-9 py-[13px] rounded-full border border-accent text-accent bg-transparent cursor-pointer transition-all duration-200 hover:bg-[rgba(0,180,255,0.15)] hover:shadow-[0_0_16px_rgba(0,180,255,0.4)] hover:-translate-y-[5px]">
+            <button className="text-[15px] font-thin px-9 py-[13px] rounded-full border-none bg-[#4a3afd]  text-white cursor-pointer transition-all duration-200 hover:bg-[rgba(0,180,255,0.15)] hover:shadow-[0_0_16px_rgba(0,180,255,0.4)] hover:-translate-y-[5px]">
               Learn More
             </button>
           </div>
@@ -85,7 +87,7 @@ function Home() {
           {/* Dashboard screenshot */}
           <div className="group w-full max-w-[840px] mx-auto rounded-[14px] overflow-hidden border border-white/10 shadow-hero-img cursor-pointer transition-all duration-400 ease-in-out relative z-[2] hover:shadow-hero-img-hover hover:-translate-y-[6px] hover:scale-[1.012]">
             <img
-              src="https://dakshcwm.com/wp-content/uploads/2025/11/image-4.png"
+              src={dashboard}
               alt="DakshCWM Dashboard"
               className="w-full block rounded-[12px] transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.025]"
             />
@@ -123,7 +125,7 @@ function Home() {
             {/* Left: sticky text */}
             <div className="lg:sticky lg:top-[84px]">
               {/* Label pill */}
-              <span className="inline-block text-[11px] font-semibold text-accent uppercase tracking-[1.5px] px-3 py-1 bg-[rgba(0,180,255,0.15)] border border-[rgba(0,180,255,0.35)] rounded-full mb-3">
+              <span className="inline-block text-[11px] font-semibold text-accent uppercase tracking-[1.5px] px-3 py-1  border border-[rgba(0,180,255,0.35)] rounded-full mb-3">
                 Features &amp; Benefits
               </span>
               <h2 className="text-[34px] font-extrabold text-white leading-[1.2] mb-4 mt-3 tracking-[-0.5px]">
@@ -133,7 +135,7 @@ function Home() {
                 DakshCWM automates repetitive CAD operations and gives engineers
                 more time to focus on innovation.
               </p>
-              <button className="text-[13px] font-bold px-[22px] py-2.5 bg-accent text-black border-none rounded-xl cursor-pointer transition-all duration-200 hover:bg-[#33c4ff] hover:shadow-accent-glow hover:-translate-y-[5px]">
+              <button className="text-[13px] font-thin px-[22px] py-2.5 bg-[#4a3afd] text-white border-none rounded-xl cursor-pointer transition-all duration-200 hover:bg-[#33c4ff] hover:shadow-accent-glow hover:-translate-y-[5px]">
                 See All Features
               </button>
             </div>

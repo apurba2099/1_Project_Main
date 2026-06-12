@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import logoCwm from "./../assets/images/logoCWM.png";
 import logo from "./../assets/images/logo.png";
 
 function Navbar() {
@@ -19,7 +20,7 @@ function Navbar() {
         <Link to="/" className="flex items-center gap-2.5 flex-shrink-0">
           <div className="w-9 h-9 rounded-full border border-[rgba(0,180,255,0.5)] overflow-hidden flex items-center justify-center bg-[rgba(0,180,255,0.08)]">
             <img
-              src="https://dakshcwm.com/wp-content/uploads/2025/11/4.LogoPNGBig.png"
+              src={logoCwm}
               alt="DakshCWM Logo"
               className="w-full h-full object-contain"
             />
