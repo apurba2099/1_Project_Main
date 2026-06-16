@@ -67,7 +67,7 @@ function Navbar() {
             Login
           </button>
           <a
-            href="/hello.html"
+            href="./GetStarted.html"
             target="_blank"
             rel="noopener noreferrer"
             className="w-8 h-8 rounded-full bg-white/[0.07] border border-white/[0.08] text-white/60 text-sm flex items-center justify-center transition-all hover:bg-white/[0.12] hover:text-white"

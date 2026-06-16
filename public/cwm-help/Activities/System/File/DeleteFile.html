@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeleteFile - CWM Help Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: linear-gradient(to right, #ffffff 0%, #3b7cb2 100%);
+            color: #333;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: #2d3748;
+        }
+
+        .navbar-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .navbar-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .navbar-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Main Container */
+        .container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #fafbfc;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+            padding: 1.25rem 0;
+            position: sticky;
+            top: 70px;
+            height: calc(100vh - 70px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0 1.25rem 0.75rem 1.25rem;
+            color: #3b7cb2;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .sidebar-search {
+            width: calc(100% - 2.5rem);
+            margin: 0 1.25rem 1rem 1.25rem;
+            padding: 0.625rem 0.875rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            background: white;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .sidebar-search:focus {
+            outline: none;
+            border-color: #3b7cb2;
+            box-shadow: 0 0 0 3px rgba(59, 124, 178, 0.1);
+        }
+
+        #sidebarContent {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 0 0.5rem;
+        }
+
+        .sidebar-tree {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            text-align: left;
+        }
+
+        .sidebar-tree ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: none;
+            border-left: 1px solid #e8eaed;
+            margin-left: 0.75rem;
+            padding-left: 0.5rem;
+            text-align: left;
+        }
+
+        .sidebar-tree li.expanded > ul {
+            display: block;
+        }
+
+        .sidebar-tree > li {
+            margin: 0.125rem 0;
+            text-align: left;
+        }
+
+        .sidebar-tree li li {
+            margin: 0.125rem 0;
+            text-align: left;
+        }
+
+        .sidebar-tree a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+            line-height: 1.4;
+            margin: 0 0.5rem;
+            text-align: left;
+        }
+
+        .sidebar-tree a:hover {
+            background-color: #f0f4ff;
+            color: #3b7cb2;
+        }
+
+        .sidebar-tree a.active {
+            background-color: #3b7cb2;
+            color: white;
+            font-weight: 500;
+        }
+
+        .sidebar-tree .category {
+            font-weight: 600;
+            color: #2d3748;
+            cursor: pointer;
+            user-select: none;
+            padding: 0.625rem 0.75rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+            margin: 0.125rem 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            text-align: left;
+        }
+
+        .sidebar-tree .category:hover {
+            background-color: #f0f4ff;
+            color: #3b7cb2;
+        }
+
+        .sidebar-tree .category::before {
+            content: '▶';
+            display: inline-block;
+            margin-right: 0.5rem;
+            transition: transform 0.2s;
+            font-size: 0.65rem;
+            color: #3b7cb2;
+            width: 0.75rem;
+            text-align: center;
+        }
+
+        .sidebar-tree li.expanded > .category::before {
+            transform: rotate(90deg);
+        }
+
+        .sidebar-tree .item {
+            font-size: 0.875rem;
+            text-align: left;
+        }
+
+        .sidebar-tree .item a {
+            padding-left: 1rem;
+            position: relative;
+            text-align: left;
+        }
+
+        .sidebar-tree .item a::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: #cbd5e0;
+            transition: background-color 0.2s;
+        }
+
+        .sidebar-tree .item a:hover::before,
+        .sidebar-tree .item a.active::before {
+            background-color: #3b7cb2;
+        }
+
+        .sidebar-tree .item a.active::before {
+            background-color: white;
+        }
+
+        .sidebar-loading {
+            text-align: center;
+            color: #718096;
+            padding: 2rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 3rem 4rem;
+            overflow-y: auto;
+            background: white;
+            margin: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+            max-width: 1300px;
+        }
+
+        /* Typography Improvements */
+        .content {
+            font-size: 16px;
+            line-height: 1.75;
+            color: #2d3748;
+        }
+
+        .content h1 {
+            color: #1a202c;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            margin-top: 0;
+            border-bottom: 4px solid #3b7cb2;
+            padding-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .content h2 {
+            color: #2d3748;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-top: 3rem;
+            margin-bottom: 1.25rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .content h2:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .content h3 {
+            color: #4a5568;
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content h4 {
+            color: #718096;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .content p {
+            margin-bottom: 1.25rem;
+            color: #4a5568;
+            font-size: 1rem;
+        }
+
+        /* Property Cards */
+        .content .property {
+            background: linear-gradient(to right, #f7fafc 0%, #ffffff 100%);
+            padding: 1.5rem;
+            margin: 1.25rem 0;
+            border-left: 4px solid #3b7cb2;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .content .property:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .content .property-name {
+            font-weight: 700;
+            color: #3b7cb2;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.01em;
+        }
+
+        .content .property p {
+            margin-bottom: 0.75rem;
+            color: #4a5568;
+        }
+
+        .content .property p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Code Styling */
+        .content code {
+            background: #edf2f7;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            color: #c53030;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            border: 1px solid #e2e8f0;
+            font-weight: 500;
+        }
+
+        .content pre {
+            background: #1a202c;
+            color: #f7fafc;
+            padding: 1.75rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid #2d3748;
+            font-size: 1rem;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        .content pre code {
+            background: transparent;
+            color: #f7fafc;
+            padding: 0;
+            border: none;
+            font-size: 1rem;
+            line-height: 1.8;
+            font-weight: 400;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        .content .example {
+            background: #1a202c;
+            color: #f7fafc;
+            padding: 1.75rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 4px solid #3b7cb2;
+            font-size: 1rem;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        .content .example pre {
+            background: transparent;
+            color: #f7fafc;
+            padding: 0;
+            margin: 0;
+            border: none;
+            box-shadow: none;
+            font-size: 1rem;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        .content .example pre code {
+            color: #f7fafc;
+            font-size: 1rem;
+        }
+
+        .content .example strong {
+            color: #90cdf4;
+            font-weight: 600;
+        }
+
+        /* Lists */
+        .content ul, .content ol {
+            margin: 1.25rem 0;
+            padding-left: 2rem;
+            color: #4a5568;
+        }
+
+        .content li {
+            margin: 0.75rem 0;
+            line-height: 1.7;
+        }
+
+        .content ul li::marker {
+            color: #3b7cb2;
+        }
+
+        /* Tables */
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .content table th {
+            background: #3b7cb2;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .content table td {
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #4a5568;
+        }
+
+        .content table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .content table tr:hover {
+            background: #f7fafc;
+        }
+
+        /* Alerts and Notes */
+        .content .warning,
+        .content .note,
+        .content .info {
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .content .warning {
+            background: #fffbf0;
+            border-left-color: #f6ad55;
+            color: #744210;
+        }
+
+        .content .note {
+            background: #ebf8ff;
+            border-left-color: #4299e1;
+            color: #2c5282;
+        }
+
+        .content .info {
+            background: #f0fff4;
+            border-left-color: #48bb78;
+            color: #22543d;
+        }
+
+        /* Strong and Emphasis */
+        .content strong {
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .content em {
+            color: #718096;
+            font-style: italic;
+        }
+
+        /* Links */
+        .content a {
+            color: #3b7cb2;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .content a:hover {
+            border-bottom-color: #3b7cb2;
+        }
+
+        /* Blockquotes */
+        .content blockquote {
+            border-left: 4px solid #cbd5e0;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            color: #718096;
+            font-style: italic;
+        }
+
+        /* Horizontal Rules */
+        .content hr {
+            border: none;
+            border-top: 2px solid #e2e8f0;
+            margin: 2.5rem 0;
+        }
+
+        /* Scrollbar Styling */
+        .content::-webkit-scrollbar,
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content::-webkit-scrollbar-track,
+        .sidebar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .content::-webkit-scrollbar-thumb,
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 4px;
+        }
+
+        .content::-webkit-scrollbar-thumb:hover,
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0;
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Print Styles */
+        @media print {
+            .navbar, .sidebar {
+                display: none;
+            }
+            .content {
+                margin: 0;
+                padding: 1rem;
+                box-shadow: none;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .content {
+                padding: 2rem 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                top: 0;
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .content {
+                margin: 0.5rem;
+                padding: 1.5rem;
+            }
+
+            .content h1 {
+                font-size: 2rem;
+            }
+
+            .content h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="/wp-content/uploads/cwm-help/00-Overview/GetStarted.html" class="navbar-brand">
+            <img src="https://dakshcwm.com/wp-content/uploads/2025/11/4.LogoPNGBig-1.png" alt="CWM Logo" class="navbar-logo" 
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <span style="display:none;">Daksh</span>
+        </a>
+        <div class="navbar-title">CWM Help Documentation</div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">Documentation</div>
+            <input type="text" class="sidebar-search" placeholder="Search help pages..." id="helpSearch">
+            <div id="sidebarContent"><ul class="sidebar-tree">
+<li class="">
+    <div class="category">00-Overview</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/00-Overview/GetStarted.html" class="">GetStarted</a>
+</li>
+</ul>
+
+</li>
+<li class="expanded">
+    <div class="category">Activities</div>
+<ul class="sidebar-tree">
+<li class="">
+    <div class="category">Branching</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Branching/FlowDecision.html" class="">FlowDecision</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Branching/If.html" class="">If</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Branching/Switch.html" class="">Switch</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">Composition</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Composition/Complete.html" class="">Complete</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">Console</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Console/ReadLine.html" class="">ReadLine</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Console/WriteLine.html" class="">WriteLine</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">Flow</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Flow/End.html" class="">End</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Flow/Flowchart.html" class="">Flowchart</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Flow/FlowNode.html" class="">FlowNode</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Flow/Start.html" class="">Start</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">Looping</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Looping/Break.html" class="">Break</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Looping/For.html" class="">For</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Looping/ForEach.html" class="">ForEach</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Looping/While.html" class="">While</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">Primitives</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Primitives/Correlate.html" class="">Correlate</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Primitives/Fault.html" class="">Fault</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Primitives/Finish.html" class="">Finish</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Primitives/SetName.html" class="">SetName</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Primitives/SetVariable.html" class="">SetVariable</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">Scheduling</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Scheduling/Cron.html" class="">Cron</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Scheduling/Delay.html" class="">Delay</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Scheduling/StartAt.html" class="">StartAt</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Scheduling/Timer.html" class="">Timer</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">Scripting</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Scripting/RunCSharp.html" class="">RunCSharp</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Scripting/RunJavaScript.html" class="">RunJavaScript</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">SolidWorks</div>
+<ul class="sidebar-tree">
+<li class="">
+    <div class="category">Assembly</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Assembly/CaptureAssemblyParts.html" class="">CaptureAssemblyParts</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Assembly/CaptureAssemblyStructure.html" class="">CaptureAssemblyStructure</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Assembly/GetAssemblyPartsAll.html" class="">GetAssemblyPartsAll</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Assembly/MatchPartInAssembly.html" class="">MatchPartInAssembly</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Assembly/MatchSubAssemblyInAssembly.html" class="">MatchSubAssemblyInAssembly</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">BOM</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/BOM/ExportBomToExcel.html" class="">ExportBomToExcel</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/BOM/ExtractBomData.html" class="">ExtractBomData</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/BOM/InsertBomTable.html" class="">InsertBomTable</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/BOM/ValidateBomData.html" class="">ValidateBomData</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">Cleanup</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Cleanup/SwxCleanupActivity.html" class="">SwxCleanupActivity</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">Common</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Common/AddOrUpdateCustomProperty.html" class="">AddOrUpdateCustomProperty</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Common/BulkUpdateCustomProperties.html" class="">BulkUpdateCustomProperties</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Common/CheckFileType.html" class="">CheckFileType</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Common/FindPropertyPathActivity.html" class="">FindPropertyPathActivity</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Common/GetAllPartFileFromDirectory.html" class="">GetAllPartFileFromDirectory</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Common/GetFileName.html" class="">GetFileName</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Common/GetFullPath.html" class="">GetFullPath</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Common/OpenSolidWorksFile.html" class="">OpenSolidWorksFile</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Common/Save.html" class="">Save</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Common/SaveAs.html" class="">SaveAs</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Common/SwxCleanupActivity.html" class="">SwxCleanupActivity</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Common/UserConfigurablePartProcessor.html" class="">UserConfigurablePartProcessor</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Common/ValidateCustomProperties.html" class="">ValidateCustomProperties</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">Drawing</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Drawing/AddNewSheet.html" class="">AddNewSheet</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Drawing/ExportDrawingToPDF.html" class="">ExportDrawingToPDF</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Drawing/GetActiveSheetName.html" class="">GetActiveSheetName</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Drawing/GetSheetNames.html" class="">GetSheetNames</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Drawing/SetActiveSheet.html" class="">SetActiveSheet</a>
+</li>
+</ul>
+
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/GetActiveDoc.html" class="">GetActiveDoc</a>
+</li>
+<li class="">
+    <div class="category">Part</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Part/ExtractCustomProperties.html" class="">ExtractCustomProperties</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Part/ExtractPartData.html" class="">ExtractPartData</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Part/GetAndSaveThumbnail.html" class="">GetAndSaveThumbnail</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Part/GetFeatureByName.html" class="">GetFeatureByName</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Part/GetPartMaterial.html" class="">GetPartMaterial</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Part/GetSurfaceArea.html" class="">GetSurfaceArea</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Part/GetVolume.html" class="">GetVolume</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Part/HasFeatureTreeErrors.html" class="">HasFeatureTreeErrors</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Part/IsMultiBodyPart.html" class="">IsMultiBodyPart</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/Part/SetDocumentUnitSystem.html" class="">SetDocumentUnitSystem</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">SheetMetal</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/SheetMetal/CheckAndConvertToSheetMetal.html" class="">CheckAndConvertToSheetMetal</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/SheetMetal/CheckAndInsertBends.html" class="">CheckAndInsertBends</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/SheetMetal/CheckIfSheetMetal.html" class="">CheckIfSheetMetal</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/SolidWorks/SheetMetal/ExportSheetMetalToDxf.html" class="">ExportSheetMetalToDxf</a>
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+<li class="expanded">
+    <div class="category">System</div>
+<ul class="sidebar-tree">
+<li class="">
+    <div class="category">Directory</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/Directory/CreateDirectory.html" class="">CreateDirectory</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">Excel</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/Excel/CleanExcelNewlines.html" class="">CleanExcelNewlines</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/Excel/CompareExcelFiles.html" class="">CompareExcelFiles</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/Excel/ReadExcelFile.html" class="">ReadExcelFile</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/Excel/UpdateExcelCell.html" class="">UpdateExcelCell</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/Excel/WriteExcelFile.html" class="">WriteExcelFile</a>
+</li>
+</ul>
+
+</li>
+<li class="expanded">
+    <div class="category">File</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/CombinePath.html" class="">CombinePath</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/CopyFile.html" class="">CopyFile</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/CreateFile.html" class="">CreateFile</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/DeleteFile.html" class="active">DeleteFile</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/GetDirectoryName.html" class="">GetDirectoryName</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/GetExtension.html" class="">GetExtension</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/GetFileAttributes.html" class="">GetFileAttributes</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/GetFileCreationTime.html" class="">GetFileCreationTime</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/GetFileLastAccessTime.html" class="">GetFileLastAccessTime</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/GetFileLastWriteTime.html" class="">GetFileLastWriteTime</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/GetFileName.html" class="">GetFileName</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/GetFileNameWithoutExtension.html" class="">GetFileNameWithoutExtension</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/GetFiles.html" class="">GetFiles</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/GetFileSize.html" class="">GetFileSize</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/GetFileSystemEntries.html" class="">GetFileSystemEntries</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/GetTempPath.html" class="">GetTempPath</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/MoveFile.html" class="">MoveFile</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/File/SetFileAttributes.html" class="">SetFileAttributes</a>
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">UserInput</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/System/UserInput/GetUserInput.html" class="">GetUserInput</a>
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+<li class="">
+    <div class="category">Workflows</div>
+<ul class="sidebar-tree">
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Workflows/Parallel.html" class="">Parallel</a>
+</li>
+<li class="item">
+    <a href="/wp-content/uploads/cwm-help/Activities/Workflows/Sequence.html" class="">Sequence</a>
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+</ul>
+</div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content">
+            <h1>DeleteFile Activity</h1>
+    
+    <div class="info">
+        <p><strong>Purpose:</strong> This activity deletes a file from the file system. The file is permanently removed and cannot be recovered through normal means. Use this activity with caution, especially for important files.</p>
+    </div>
+    
+    <h2>Input Properties</h2>
+    
+    <div class="property">
+        <span class="property-name">FilePath</span>
+        <p>The file path to delete. This must be an existing file that is accessible and writable.</p>
+        <p><strong>Type:</strong> <code>string</code></p>
+        <p><strong>Required:</strong> <code>Yes</code></p>
+        <p><strong>Example:</strong> <code>"C:\Data\OldFile.txt"</code></p>
+    </div>
+    
+    <h2>Output Properties</h2>
+    
+    <div class="property">
+        <span class="property-name">Success</span>
+        <p>True if the file was deleted successfully, false otherwise.</p>
+        <p><strong>Type:</strong> <code>bool</code></p>
+        <p><strong>Note:</strong> Returns <code>false</code> if the FilePath is null or empty, if the file does not exist, if access is denied, if the file is locked by another process, or if an error occurs.</p>
+    </div>
+    
+    <h2>Usage Example</h2>
+    <div class="example">
+        <pre><strong>Scenario:</strong> Delete a file
+
+<strong>Configuration:</strong>
+- FilePath: "C:\Data\TempFile.txt"
+
+<strong>Result:</strong>
+- Success: true (file deleted)
+
+<strong>Scenario:</strong> Delete non-existent file
+
+<strong>Configuration:</strong>
+- FilePath: "C:\Data\NonExistent.txt"
+
+<strong>Result:</strong>
+- Success: false (file doesn't exist)</pre>
+    </div>
+    
+    <h2>Error Handling</h2>
+    <div class="warning">
+        <p><strong>Important:</strong> The activity handles errors gracefully:</p>
+        <ul>
+            <li>If <code>FilePath</code> is null or empty, <code>Success</code> will be <code>false</code></li>
+            <li>If the file does not exist (<code>FileNotFoundException</code>), <code>Success</code> will be <code>false</code></li>
+            <li>If access is denied (<code>UnauthorizedAccessException</code>), <code>Success</code> will be <code>false</code></li>
+            <li>If the file is locked by another process (<code>IOException</code>), <code>Success</code> will be <code>false</code></li>
+            <li>If any other exception occurs, <code>Success</code> will be <code>false</code></li>
+            <li>The activity does not throw exceptions - errors are indicated by the <code>Success</code> output</li>
+        </ul>
+        <p><strong>Always check the Success output</strong> to verify if the file was deleted successfully.</p>
+    </div>
+    
+    <h2>Important Notes</h2>
+    <div class="note">
+        <ul>
+            <li><strong>WARNING:</strong> This operation is <strong>permanent</strong> - deleted files cannot be easily recovered</li>
+            <li>The file must not be <strong>locked by another process</strong> (e.g., open in an application) - close all handles to the file before deleting</li>
+            <li>If the file does not exist, the operation will fail (returns <code>false</code>)</li>
+            <li>Ensure you have <strong>write permissions</strong> to the file and its directory</li>
+            <li>Consider using <strong>CopyFile</strong> to create a backup before deleting important files</li>
+            <li>Deleted files are not moved to the Recycle Bin - they are permanently removed</li>
+        </ul>
+    </div>
+    
+    <h2>Related Activities</h2>
+    <ul>
+        <li><strong><a href="/wp-content/uploads/cwm-help/Activities/System/File/CopyFile.html">CopyFile</a></strong> - Create a backup before deleting</li>
+        <li><strong><a href="/wp-content/uploads/cwm-help/Activities/System/File/MoveFile.html">MoveFile</a></strong> - Move a file instead of deleting</li>
+        <li><strong><a href="/wp-content/uploads/cwm-help/Activities/System/Directory/DeleteDirectory.html">DeleteDirectory</a></strong> - Delete a directory</li>
+    </ul>
+        </main>
+    </div>
+
+    <script>
+        // Set up static navigation when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set active item based on current URL
+            setActiveItem();
+            
+            // Add click handlers for categories
+            document.querySelectorAll('.sidebar-tree .category').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const li = this.parentElement;
+                    li.classList.toggle('expanded');
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('helpSearch');
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    filterTree(e.target.value);
+                });
+            }
+        });
+
+        function setActiveItem() {
+            const currentPath = window.location.pathname;
+            let activeLink = null;
+            
+            document.querySelectorAll('.sidebar-tree a').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && (href === currentPath || currentPath.includes(href.replace('.html', '')))) {
+                    link.classList.add('active');
+                    activeLink = link;
+                    // Expand parent categories
+                    let parent = link.closest('li');
+                    while (parent) {
+                        const categoryParent = parent.parentElement?.closest('li');
+                        if (categoryParent) {
+                            categoryParent.classList.add('expanded');
+                        }
+                        parent = categoryParent;
+                    }
+                }
+            });
+            
+            // Scroll active item into view after a short delay
+            if (activeLink) {
+                setTimeout(() => {
+                    activeLink.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center',
+                        inline: 'nearest'
+                    });
+                }, 100);
+            }
+        }
+
+        function filterTree(searchTerm) {
+            const term = searchTerm.toLowerCase();
+            document.querySelectorAll('.sidebar-tree li').forEach(li => {
+                const text = li.textContent.toLowerCase();
+                if (text.includes(term) || term === '') {
+                    li.style.display = '';
+                    // Show parent categories
+                    let parent = li.parentElement;
+                    while (parent && parent.classList.contains('sidebar-tree')) {
+                        parent = parent.parentElement;
+                        if (parent && parent.querySelector('.category')) {
+                            parent.style.display = '';
+                            parent.classList.add('expanded');
+                        }
+                    }
+                } else {
+                    li.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
