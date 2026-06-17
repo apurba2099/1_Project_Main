@@ -1,12 +1,13 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import Products from './pages/Products';
-import Pricing from './pages/Pricing';
-import Features from './pages/Features';
-import AboutUs from './pages/AboutUs';
-import './index.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Products from "./pages/Products";
+import Pricing from "./pages/Pricing";
+import Features from "./pages/Features";
+import AboutUs from "./pages/AboutUs";
+import Auth from "./pages/Auth";
+import "./index.css";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/features" element={<Features />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/login" element={<Auth />} />
       </Routes>
       <Footer />
     </BrowserRouter>
