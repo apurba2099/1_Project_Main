@@ -7,6 +7,7 @@ import Pricing from "./pages/Pricing";
 import Features from "./pages/Features";
 import AboutUs from "./pages/AboutUs";
 import Auth from "./pages/Auth";
+import { GuestRoute, ProtectedRoute } from "./components/ProtectedRoute";
 import "./index.css";
 
 function App() {
@@ -19,7 +20,14 @@ function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/features" element={<Features />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/login" element={<Auth />} />
+        <Route
+          path="/login"
+          element={
+            <GuestRoute>
+              <Auth />
+            </GuestRoute>
+          }
+        />
       </Routes>
       <Footer />
     </BrowserRouter>
