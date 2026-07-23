@@ -8,6 +8,8 @@ import Pricing from "./pages/Pricing";
 import Features from "./pages/Features";
 import AboutUs from "./pages/AboutUs";
 import Auth from "./pages/Auth";
+import ContactUs from "./pages/ContactUs";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import { GuestRoute, ProtectedRoute } from "./components/ProtectedRoute";
 import "./index.css";
 
@@ -22,6 +24,8 @@ function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/features" element={<Features />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route
           path="/login"
           element={
