@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import dashboard from "../assets/images/hero_dashboard_screenshot.png";
 
 import feat1 from "../assets/images/1_feature.png";
@@ -135,9 +136,12 @@ function Home() {
                 DakshCWM automates repetitive CAD operations and gives engineers
                 more time to focus on innovation.
               </p>
-              <button className="text-[13px] font-thin px-[22px] py-2.5 bg-[#4a3afd] text-white border-none rounded-xl cursor-pointer transition-all duration-200 hover:bg-[#33c4ff] hover:shadow-accent-glow hover:-translate-y-[5px]">
+              <Link
+                to="/features"
+                className="text-[13px] font-thin px-[22px] py-2.5 bg-[#4a3afd] text-white border-none rounded-xl cursor-pointer transition-all duration-200 hover:bg-[#33c4ff] hover:shadow-accent-glow hover:-translate-y-[5px]"
+              >
                 See All Features
-              </button>
+              </Link>
             </div>
 
             {/* Right: 2-column grid */}

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import logoCwm from "./../assets/images/logoCWM.png";
 import logo from "./../assets/images/logo.png";
 
@@ -24,6 +25,7 @@ function Footer() {
               <br />
               We're Here to Help.
             </p>
+
             <a
               href="mailto:sales@cloudcadai.com"
               className="text-accent text-sm font-medium underline underline-offset-[3px] decoration-[rgba(0,180,255,0.4)] transition-opacity hover:opacity-75"
@@ -38,16 +40,30 @@ function Footer() {
               Company
             </h4>
             <ul className="flex flex-col gap-3">
-              {["About Us", "Contact Us", "Blog"].map((item) => (
-                <li key={item}>
-                  <a
-                    href="#"
-                    className="text-sm text-white/55 transition-colors hover:text-white"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <Link
+                  to="/about"
+                  className="text-sm text-white/55 transition-colors hover:text-white"
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/contact"
+                  className="text-sm text-white/55 transition-colors hover:text-white"
+                >
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/blog"
+                  className="text-sm text-white/55 transition-colors hover:text-white"
+                >
+                  Blog
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -57,18 +73,38 @@ function Footer() {
               Quick Links
             </h4>
             <ul className="flex flex-col gap-3">
-              {["Privacy Policy", "Learn More", "Features", "Pricing"].map(
-                (item) => (
-                  <li key={item}>
-                    <a
-                      href="#"
-                      className="text-sm text-white/55 transition-colors hover:text-white"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ),
-              )}
+              <li>
+                <Link
+                  to="/privacy-policy"
+                  className="text-sm text-white/55 transition-colors hover:text-white"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/products"
+                  className="text-sm text-white/55 transition-colors hover:text-white"
+                >
+                  Learn More
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/features"
+                  className="text-sm text-white/55 transition-colors hover:text-white"
+                >
+                  Features
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/pricing"
+                  className="text-sm text-white/55 transition-colors hover:text-white"
+                >
+                  Pricing
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
