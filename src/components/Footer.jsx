@@ -83,7 +83,7 @@ function Footer() {
               </li>
               <li>
                 <Link
-                  to="/products"
+                  to="/what-is-dakshcwm"
                   className="text-sm text-white/55 transition-colors hover:text-white"
                 >
                   Learn More

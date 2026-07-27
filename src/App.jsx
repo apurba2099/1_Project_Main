@@ -10,6 +10,7 @@ import AboutUs from "./pages/AboutUs";
 import Auth from "./pages/Auth";
 import ContactUs from "./pages/ContactUs";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import WhatIsDakshCWM from "./pages/WhatIsDakshCWM";
 import { GuestRoute, ProtectedRoute } from "./components/ProtectedRoute";
 import "./index.css";
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/what-is-dakshcwm" element={<WhatIsDakshCWM />} />
         <Route
           path="/login"
           element={

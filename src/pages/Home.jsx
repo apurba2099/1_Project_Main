@@ -80,9 +80,12 @@ function Home() {
 
           {/* CTA button */}
           <div className="mb-[52px]">
-            <button className="text-[15px] font-thin px-9 py-[13px] rounded-full border-none bg-[#4a3afd]  text-white cursor-pointer transition-all duration-200 hover:bg-[rgba(0,180,255,0.15)] hover:shadow-[0_0_16px_rgba(0,180,255,0.4)] hover:-translate-y-[5px]">
+            <Link
+              to="/what-is-dakshcwm"
+              className="text-[15px] font-thin px-9 py-[13px] rounded-full border-none bg-[#4a3afd] text-white cursor-pointer transition-all duration-200 hover:bg-[rgba(0,180,255,0.15)] hover:shadow-[0_0_16px_rgba(0,180,255,0.4)] hover:-translate-y-[5px]"
+            >
               Learn More
-            </button>
+            </Link>
           </div>
 
           {/* Dashboard screenshot */}
