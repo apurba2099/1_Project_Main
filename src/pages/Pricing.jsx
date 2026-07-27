@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const FAQS = [
   {
@@ -10,8 +11,8 @@ const FAQS = [
     a: "Yes. You can upgrade at any time as your needs grow.",
   },
   {
-    q: "Do API and collaboration features require Premium?",
-    a: "No. These capabilities will roll out over time. Standard includes limited access and Premium unlocks full capability when released.",
+    q: "Do the API and collaboration features require future releases?",
+    a: "Yes. These capabilities will roll out over time. Standard includes limited access and Premium unlocks full capability when released.",
   },
   {
     q: "How is workflow execution handled?",
@@ -73,15 +74,15 @@ function Pricing() {
                 Standard
               </div>
               <p className="text-xs text-dim mb-3.5">
-                Per license / billed annually
+                Best for small teams and pilots
               </p>
               <div className="text-[36px] font-black text-white leading-none mb-1 tracking-[-1px]">
-                $19{" "}
+                $30
                 <span className="text-sm font-medium text-muted">
                   / license / month
                 </span>
               </div>
-              <p className="text-xs text-dim mb-6">$228 per year</p>
+              <p className="text-xs text-dim mb-6">$300 per year</p>
               <ul className="flex flex-col gap-[9px] mb-7 flex-1 border-t border-white/[0.08] pt-[18px]">
                 {[
                   "Custom workflows, up to 10",
@@ -99,9 +100,12 @@ function Pricing() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full py-3 text-sm font-semibold border border-accent text-accent bg-transparent rounded cursor-pointer transition-all hover:bg-[rgba(0,180,255,0.15)]">
+              <Link
+                to="/contact"
+                className="w-full py-3 text-center text-sm font-semibold border border-accent text-accent bg-transparent rounded cursor-pointer transition-all hover:bg-[rgba(0,180,255,0.15)]"
+              >
                 Start with Standard
-              </button>
+              </Link>
             </div>
 
             {/* Premium */}
@@ -110,15 +114,15 @@ function Pricing() {
                 Premium
               </div>
               <p className="text-xs text-dim mb-3.5">
-                Per license / billed monthly
+                For teams that need full flexibility
               </p>
               <div className="text-[36px] font-black text-white leading-none mb-1 tracking-[-1px]">
-                $59{" "}
+                $50
                 <span className="text-sm font-medium text-muted">
                   / license / month
                 </span>
               </div>
-              <p className="text-xs text-dim mb-6">$588 per year</p>
+              <p className="text-xs text-dim mb-6">$500 per year</p>
               <ul className="flex flex-col gap-[9px] mb-7 flex-1 border-t border-white/[0.08] pt-[18px]">
                 {[
                   "Unlimited custom workflows",
@@ -137,9 +141,12 @@ function Pricing() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full py-3 text-sm font-bold bg-accent text-black rounded cursor-pointer transition-all hover:bg-[#33c4ff] hover:shadow-accent-glow hover:-translate-y-px">
+              <Link
+                to="/contact"
+                className="w-full py-3 text-center text-sm font-bold bg-accent text-black rounded cursor-pointer transition-all hover:bg-[#33c4ff] hover:shadow-accent-glow hover:-translate-y-px"
+              >
                 Choose Premium
-              </button>
+              </Link>
             </div>
           </div>
 

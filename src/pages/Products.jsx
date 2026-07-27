@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import logo_1 from "./../assets/images/logo_1.png";
 import logo_2 from "./../assets/images/logo_2.png";
 import logo_3 from "./../assets/images/logo_3.png";
@@ -61,9 +62,12 @@ function Products() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full text-center py-3 text-sm font-bold bg-accent text-black rounded cursor-pointer transition-all hover:bg-[#33c4ff] hover:shadow-accent-glow hover:-translate-y-px">
+              <Link
+                to="/contact"
+                className="w-full text-center py-3 text-sm font-bold bg-accent text-black rounded cursor-pointer transition-all hover:bg-[#33c4ff] hover:shadow-accent-glow hover:-translate-y-px"
+              >
                 Get Started
-              </button>
+              </Link>
             </div>
 
             {/* Lite */}
@@ -91,9 +95,12 @@ function Products() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full text-center py-3 text-sm font-semibold border border-accent text-accent bg-transparent rounded cursor-pointer transition-all hover:bg-[rgba(0,180,255,0.15)]">
+              <Link
+                to="/contact"
+                className="w-full text-center py-3 text-sm font-semibold border border-accent text-accent bg-transparent rounded cursor-pointer transition-all hover:bg-[rgba(0,180,255,0.15)]"
+              >
                 Get Started
-              </button>
+              </Link>
             </div>
 
             {/* Enterprise */}
@@ -122,9 +129,12 @@ function Products() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full text-center py-3 text-sm font-semibold bg-white/[0.06] border border-white/[0.08] text-white rounded cursor-pointer transition-all hover:bg-white/10 hover:border-white/20">
+              <Link
+                to="/contact"
+                className="w-full text-center py-3 text-sm font-semibold bg-white/[0.06] border border-white/[0.08] text-white rounded cursor-pointer transition-all hover:bg-white/10 hover:border-white/20"
+              >
                 Contact Sales
-              </button>
+              </Link>
             </div>
           </div>
         </div>

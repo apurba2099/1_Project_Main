@@ -22,7 +22,7 @@ function WhatIsDakshCWM() {
           </div>
 
           {/* Hero tagline */}
-          <h2 className="text-[clamp(20px,3.2vw,36px)] font-extrabold text-white leading-[1.2] tracking-[-0.5px] mb-3 max-w-[680px] mx-auto">
+          <h2 className="text-[clamp(24px,3.2vw,36px)] font-extrabold text-white leading-[1.2] tracking-[-0.5px] mb-3 max-w-[680px] mx-auto">
             Stop Doing Manually What a Machine Can Do{' '}
             <span className="text-accent">Automatically</span>
           </h2>
@@ -33,18 +33,18 @@ function WhatIsDakshCWM() {
             ship better designs, faster, with fewer errors.
           </p>
 
-          {/* Quick stats row */}
-          <div className="inline-flex items-center gap-0 divide-x divide-white/[0.08] bg-white/[0.04] border border-white/[0.08] rounded-xl overflow-hidden">
+          {/* Quick stats row — grid on mobile, inline on desktop */}
+          <div className="w-full sm:w-auto sm:inline-grid grid grid-cols-3 divide-x divide-white/[0.08] bg-white/[0.04] border border-white/[0.08] rounded-xl overflow-hidden">
             {[
               { value: '10×', label: 'Faster Exports' },
               { value: '100%', label: 'SolidWorks Native' },
               { value: '0', label: 'Code Required' },
             ].map((stat) => (
-              <div key={stat.label} className="px-6 py-3 text-center">
-                <p className="text-[clamp(16px,2vw,22px)] font-extrabold text-accent leading-none mb-0.5">
+              <div key={stat.label} className="px-4 sm:px-6 py-3 text-center">
+                <p className="text-[clamp(15px,2vw,22px)] font-extrabold text-accent leading-none mb-0.5">
                   {stat.value}
                 </p>
-                <p className="text-[11px] text-white/45 font-medium whitespace-nowrap">
+                <p className="text-[10px] sm:text-[11px] text-white/45 font-medium">
                   {stat.label}
                 </p>
               </div>
