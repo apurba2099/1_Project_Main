@@ -11,6 +11,13 @@ import Auth from "./pages/Auth";
 import ContactUs from "./pages/ContactUs";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import WhatIsDakshCWM from "./pages/WhatIsDakshCWM";
+import Blog from "./pages/blog/Blog";
+import BlogPost1 from "./pages/blog/BlogPost1";
+import BlogPost2 from "./pages/blog/BlogPost2";
+import BlogPost3 from "./pages/blog/BlogPost3";
+import BlogPost4 from "./pages/blog/BlogPost4";
+import BlogPost5 from "./pages/blog/BlogPost5";
+import BlogPost6 from "./pages/blog/BlogPost6";
 import { GuestRoute, ProtectedRoute } from "./components/ProtectedRoute";
 import "./index.css";
 
@@ -28,6 +35,31 @@ function App() {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/what-is-dakshcwm" element={<WhatIsDakshCWM />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route
+          path="/blog/cad-workflow-automation-engineering-revolution"
+          element={<BlogPost1 />}
+        />
+        <Route
+          path="/blog/cad-workflow-automation-human-toll"
+          element={<BlogPost2 />}
+        />
+        <Route
+          path="/blog/cad-workflow-automation-behind-devops"
+          element={<BlogPost3 />}
+        />
+        <Route
+          path="/blog/errors-manual-cad-workflows-manufacturing"
+          element={<BlogPost4 />}
+        />
+        <Route
+          path="/blog/hidden-cost-manual-engineering-tasks"
+          element={<BlogPost5 />}
+        />
+        <Route
+          path="/blog/repetitive-engineering-tasks-disrupt-innovation"
+          element={<BlogPost6 />}
+        />
         <Route
           path="/login"
           element={
