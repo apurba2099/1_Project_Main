@@ -4,6 +4,7 @@
    Each card links to its individual post page under /blog/:slug.
 ────────────────────────────────────────────────────────────────────────── */
 import { Link } from "react-router-dom";
+import { usePageTitle } from "../../hooks/usePageTitle";
 
 export const BLOG_POSTS = [
   {
@@ -69,9 +70,9 @@ export const BLOG_POSTS = [
 ];
 
 function Blog() {
+  usePageTitle("Blog");
   return (
     <main className="bg-site-bg min-h-screen">
-
       {/* ── HERO GLOW ── */}
       <section className="relative bg-site-bg pt-[90px] pb-4 overflow-hidden">
         <div className="absolute top-[-80px] left-1/2 -translate-x-1/2 w-[800px] h-[520px] bg-page-glow pointer-events-none" />
@@ -85,9 +86,10 @@ function Blog() {
             Engineering Insights & CAD Automation
           </h1>
           <p className="text-[14px] text-muted max-w-[620px] mx-auto leading-[1.8]">
-            Engineering teams lose valuable time to manual workflows and repetitive CAD tasks.
-            These articles explore CAD workflow automation, productivity challenges, and ways
-            teams protect innovation time.
+            Engineering teams lose valuable time to manual workflows and
+            repetitive CAD tasks. These articles explore CAD workflow
+            automation, productivity challenges, and ways teams protect
+            innovation time.
           </p>
         </div>
       </section>
@@ -115,15 +117,23 @@ function Blog() {
               <div className="flex items-center gap-4 flex-wrap">
                 <span className="flex items-center gap-1.5 text-[12px] text-white/50">
                   {/* Person icon */}
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 flex-shrink-0">
-                    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-3.5 h-3.5 flex-shrink-0"
+                  >
+                    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
                   </svg>
                   {post.author}
                 </span>
                 <span className="flex items-center gap-1.5 text-[12px] text-white/50">
                   {/* Calendar icon */}
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 flex-shrink-0">
-                    <path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM5 7V6h14v1H5z"/>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-3.5 h-3.5 flex-shrink-0"
+                  >
+                    <path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM5 7V6h14v1H5z" />
                   </svg>
                   {post.date}
                 </span>
@@ -137,7 +147,6 @@ function Blog() {
           ))}
         </div>
       </section>
-
     </main>
   );
 }

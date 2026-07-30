@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const FAQS = [
   {
@@ -47,6 +48,7 @@ function FaqItem({ q, a }) {
 }
 
 function Pricing() {
+  usePageTitle("Pricing");
   return (
     <main className="bg-site-bg">
       {/* ── HERO ── */}

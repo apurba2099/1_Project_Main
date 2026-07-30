@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logoCwm from "../assets/images/logoCWM.png";
 import logo from "../assets/images/logo.png";
 import { supabase } from "../supabaseClient";
-
-
+import { usePageTitle } from "../hooks/usePageTitle";
 
 /* ── Reusable Input ── */
 function AuthInput({
@@ -186,7 +185,6 @@ function LoginForm({ onSwitch }) {
     navigate("/");
   }
 
-
   async function handleForgotPassword() {
     setError("");
     setMessage("");
@@ -212,8 +210,6 @@ function LoginForm({ onSwitch }) {
       <p className="text-[13px] text-white/50 text-center mb-6 leading-relaxed">
         Sign in to your DakshCWM account
       </p>
-
-
 
       <AuthInput
         id="login-email"
@@ -329,7 +325,6 @@ function SignupForm({ onSwitch }) {
     setMessage("Account created! Check your email to confirm your address.");
   }
 
-
   return (
     <>
       <h2 className="text-[22px] font-bold text-white text-center mb-1.5 tracking-[-0.3px]">
@@ -338,8 +333,6 @@ function SignupForm({ onSwitch }) {
       <p className="text-[13px] text-white/50 text-center mb-6 leading-relaxed">
         Start automating CAD workflows for free
       </p>
-
-
 
       {/* Name row */}
       <div className="flex gap-3 mb-0">
@@ -448,6 +441,7 @@ function SignupForm({ onSwitch }) {
 
 /* ── PAGE ── */
 export default function Auth() {
+  usePageTitle("My Account");
   const [tab, setTab] = useState("login"); // "login" | "signup"
 
   return (

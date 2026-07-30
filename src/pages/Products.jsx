@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { usePageTitle } from "../hooks/usePageTitle";
 import logo_1 from "./../assets/images/logo_1.png";
 import logo_2 from "./../assets/images/logo_2.png";
 import logo_3 from "./../assets/images/logo_3.png";
@@ -13,6 +14,7 @@ const CHECK = (
 );
 
 function Products() {
+  usePageTitle("Shop");
   return (
     <main className="bg-site-bg">
       {/* ── HERO ── */}

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import dashboard from "../assets/images/hero_dashboard_screenshot.png";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 import feat1 from "../assets/images/1_feature.png";
 import feat2 from "../assets/images/2_feature.png";
@@ -47,6 +48,7 @@ const FEATURES = [
 ];
 
 function Home() {
+  usePageTitle("CAD Workflow Automation for Engineering Teams");
   return (
     <main className="bg-site-bg">
       {/* ── SECTION 1: HERO ── */}

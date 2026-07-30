@@ -3,6 +3,7 @@
    Layout mirrors dakshcwm.com/contact-us/ exactly.
    Colors / design tokens follow the existing project theme.
 ────────────────────────────────────────────────────────────────────────── */
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const SALES_BULLETS = [
   "Plan a live demo",
@@ -24,6 +25,7 @@ const HELPFUL_BULLETS = [
 ];
 
 function ContactUs() {
+  usePageTitle("Contact");
   return (
     <main className="bg-site-bg min-h-screen">
       {/* ── HERO GLOW BANNER ── */}
@@ -32,7 +34,6 @@ function ContactUs() {
 
         {/* Hero content over the glow */}
         <div className="relative z-[1] max-w-site mx-auto px-6 text-center">
-
           {/* Label pill */}
           <span className="inline-block text-[11px] font-semibold text-accent uppercase tracking-[1.5px] px-3 py-1 border border-[rgba(0,180,255,0.35)] rounded-full mb-5">
             Contact Us
@@ -40,8 +41,7 @@ function ContactUs() {
 
           {/* Main heading */}
           <h1 className="text-[clamp(26px,4vw,46px)] font-extrabold text-white leading-[1.15] tracking-[-0.5px] mb-4 max-w-[620px] mx-auto">
-            We're Here to Help You{' '}
-            <span className="text-accent">Succeed</span>
+            We're Here to Help You <span className="text-accent">Succeed</span>
           </h1>
 
           {/* Sub-line */}
@@ -53,9 +53,9 @@ function ContactUs() {
           {/* Quick trust stats */}
           <div className="inline-grid grid-cols-3 divide-x divide-white/[0.08] bg-white/[0.04] border border-white/[0.08] rounded-xl overflow-hidden">
             {[
-              { value: '< 24h', label: 'Response Time' },
-              { value: '✓',     label: 'No Sales Pressure' },
-              { value: '2',     label: 'Direct Contacts' },
+              { value: "< 24h", label: "Response Time" },
+              { value: "✓", label: "No Sales Pressure" },
+              { value: "2", label: "Direct Contacts" },
             ].map((s) => (
               <div key={s.label} className="px-5 sm:px-7 py-3 text-center">
                 <p className="text-[clamp(14px,2vw,20px)] font-extrabold text-accent leading-none mb-0.5">
@@ -67,9 +67,7 @@ function ContactUs() {
               </div>
             ))}
           </div>
-
         </div>
-        
       </section>
 
       {/* ── GET IN TOUCH ── */}

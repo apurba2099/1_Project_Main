@@ -4,8 +4,10 @@
    Design follows the project's existing token system.
 ────────────────────────────────────────────────────────────────────────── */
 import What_is_DakshCWM from "../assets/videos/DakshCWM-1.mp4";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 function WhatIsDakshCWM() {
+  usePageTitle("What is");
   return (
     <main className="bg-site-bg min-h-screen">
       {/* ── HERO GLOW + MARKETING BANNER ── */}
@@ -14,7 +16,6 @@ function WhatIsDakshCWM() {
 
         {/* Marketing content sitting over the glow */}
         <div className="relative z-[1] max-w-site mx-auto px-6 text-center">
-
           {/* Top trust badge */}
           <div className="inline-flex items-center gap-2 bg-black/40 border border-[rgba(0,180,255,0.25)] backdrop-blur-sm text-white/70 text-[11px] font-medium px-5 py-1.5 rounded-full mb-5">
             <span className="text-accent font-bold">✦</span>
@@ -23,7 +24,7 @@ function WhatIsDakshCWM() {
 
           {/* Hero tagline */}
           <h2 className="text-[clamp(24px,3.2vw,36px)] font-extrabold text-white leading-[1.2] tracking-[-0.5px] mb-3 max-w-[680px] mx-auto">
-            Stop Doing Manually What a Machine Can Do{' '}
+            Stop Doing Manually What a Machine Can Do{" "}
             <span className="text-accent">Automatically</span>
           </h2>
 
@@ -36,9 +37,9 @@ function WhatIsDakshCWM() {
           {/* Quick stats row — grid on mobile, inline on desktop */}
           <div className="w-full sm:w-auto sm:inline-grid grid grid-cols-3 divide-x divide-white/[0.08] bg-white/[0.04] border border-white/[0.08] rounded-xl overflow-hidden">
             {[
-              { value: '10×', label: 'Faster Exports' },
-              { value: '100%', label: 'SolidWorks Native' },
-              { value: '0', label: 'Code Required' },
+              { value: "10×", label: "Faster Exports" },
+              { value: "100%", label: "SolidWorks Native" },
+              { value: "0", label: "Code Required" },
             ].map((stat) => (
               <div key={stat.label} className="px-4 sm:px-6 py-3 text-center">
                 <p className="text-[clamp(15px,2vw,22px)] font-extrabold text-accent leading-none mb-0.5">
@@ -50,7 +51,6 @@ function WhatIsDakshCWM() {
               </div>
             ))}
           </div>
-
         </div>
       </section>
 

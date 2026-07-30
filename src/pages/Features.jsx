@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { usePageTitle } from "../hooks/usePageTitle";
 const FEATURE_CARDS = [
   {
     title: "One-Click Exports",
@@ -58,6 +59,7 @@ const WHY_BULLETS = [
 ];
 
 function Features() {
+  usePageTitle("Features");
   return (
     <main className="bg-site-bg">
       {/* ── HERO ── */}
