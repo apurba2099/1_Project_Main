@@ -1,4 +1,4 @@
-import logoCwm from "./../assets/images/logoCWM.png";
+import logoCwm from "./../assets/images/LogoCWM.png";
 import { usePageTitle } from "../hooks/usePageTitle";
 
 const VALUES = [

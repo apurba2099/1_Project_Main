@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logoCwm from "./../assets/images/logoCWM.png";
+import logoCwm from "./../assets/images/LogoCWM.png";
 import logo from "./../assets/images/logo.png";
 
 function Footer() {

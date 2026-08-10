@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import logoCwm from "./../assets/images/logoCWM.png";
+import logoCwm from "./../assets/images/LogoCWM.png";
 import logo from "./../assets/images/logo.png";
 import { supabase } from "../supabaseClient";
 
