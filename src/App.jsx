@@ -21,6 +21,9 @@ import BlogPost6 from "./pages/blog/BlogPost6";
 import { GuestRoute, ProtectedRoute } from "./components/ProtectedRoute";
 import "./index.css";
 
+import AdminLibrary from "./pages/AdminLibrary";
+import { AdminRoute } from "./components/AdminRoute";
+
 function App() {
   return (
     <BrowserRouter>
@@ -66,6 +69,14 @@ function App() {
             <GuestRoute>
               <Auth />
             </GuestRoute>
+          }
+        />
+        <Route
+          path="/admin/library"
+          element={
+            <AdminRoute>
+              <AdminLibrary />
+            </AdminRoute>
           }
         />
       </Routes>
