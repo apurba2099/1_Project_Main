@@ -178,12 +178,14 @@ function LoginForm({ onSwitch }) {
       password,
     });
     setLoading(false);
-    if (err) {
-      setError(err.message);
-      return;
+      if (err) {
+        setError(err.message);
+        return;
+      }
+      const params = new URLSearchParams(window.location.search);
+      const returnTo = params.get("returnTo");
+      navigate(returnTo || "/");
     }
-    navigate("/");
-  }
 
   async function handleForgotPassword() {
     setError("");

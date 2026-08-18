@@ -23,6 +23,12 @@ import "./index.css";
 
 import AdminLibrary from "./pages/AdminLibrary";
 import { AdminRoute } from "./components/AdminRoute";
+import AdminLibraryNew from "./pages/AdminLibraryNew";
+import Workflows from "./pages/Workflows";
+import WorkflowDetail from "./pages/WorkflowDetail";
+import AdminLibraryVersion from "./pages/AdminLibraryVersion";
+import AdminLibraryEdit from "./pages/AdminLibraryEdit";
+import AdminCategories from "./pages/AdminCategories";
 
 function App() {
   return (
@@ -79,6 +85,40 @@ function App() {
             </AdminRoute>
           }
         />
+        <Route
+          path="/admin/library/new"
+          element={
+            <AdminRoute>
+              <AdminLibraryNew />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/library/:slug"
+          element={
+            <AdminRoute>
+              <AdminLibraryVersion />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/library/:slug/edit"
+          element={
+            <AdminRoute>
+              <AdminLibraryEdit />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/categories"
+          element={
+            <AdminRoute>
+              <AdminCategories />
+            </AdminRoute>
+          }
+        />
+        <Route path="/workflows" element={<Workflows />} />
+        <Route path="/workflows/:slug" element={<WorkflowDetail />} />
       </Routes>
       <Footer />
     </BrowserRouter>

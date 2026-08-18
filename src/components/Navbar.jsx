@@ -10,11 +10,20 @@ function Navbar() {
 
   // ── Auth session state ──
   const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     // Get the current session on mount
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        supabase
+          .from("profiles")
+          .select("is_admin")
+          .eq("id", session.user.id)
+          .single()
+          .then(({ data }) => setIsAdmin(data?.is_admin === true));
+      }
     });
 
     // Listen for login / logout / token refresh events
@@ -22,6 +31,16 @@ function Navbar() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        supabase
+          .from("profiles")
+          .select("is_admin")
+          .eq("id", session.user.id)
+          .single()
+          .then(({ data }) => setIsAdmin(data?.is_admin === true));
+      } else {
+        setIsAdmin(false);
+      }
     });
 
     // Cleanup listener on unmount
@@ -85,12 +104,13 @@ function Navbar() {
           }
         `}
         >
-          {[
-            "Products:/products",
-            "Pricing:/pricing",
-            "Features:/features",
-            "About Us:/about",
-          ].map((item) => {
+        {[
+          "Products:/products",
+          "Library:/workflows",
+          "Pricing:/pricing",
+          "Features:/features",
+          "About Us:/about",
+        ].map((item) => {
             const [label, path] = item.split(":");
             return (
               <li key={path}>
@@ -105,11 +125,24 @@ function Navbar() {
             );
           })}
 
+          {isAdmin && (
+            <li>
+              <NavLink
+                to="/admin/library"
+                className={linkClass}
+                onClick={() => setMenuOpen(false)}
+              >
+                Admin
+              </NavLink>
+            </li>
+          )}
+
           {/* ── Mobile-only bottom actions ── */}
           {menuOpen && (
             <li className="md:hidden mt-2 pt-3 border-t border-white/[0.08] px-4">
               <div className="flex items-center justify-between gap-3">
                 {/* ℹ Info link */}
+
                 <a
                   href="/cwm-help/00-Overview/GetStarted.html"
                   target="_blank"
@@ -206,6 +239,7 @@ function Navbar() {
               Login
             </button>
           )}
+
           <a
             href="/cwm-help/00-Overview/GetStarted.html"
             target="_blank"
@@ -223,13 +257,23 @@ function Navbar() {
           aria-label="Toggle menu"
         >
           <span
-            className={`block w-[22px] h-[2px] bg-white/70 rounded-sm transition-all duration-300 origin-center ${menuOpen ? "translate-y-[7px] rotate-45 !bg-accent" : ""}`}
+            className={`block w-[22px] h-[2px] bg-white/70 rounded-sm transition-all duration-300 origin-center ${
+              menuOpen
+                ? "translate-y-[7px] rotate-45 !bg-accent"
+                : ""
+            }`}
           />
           <span
-            className={`block w-[22px] h-[2px] bg-white/70 rounded-sm transition-all duration-300 ${menuOpen ? "opacity-0 scale-x-0" : ""}`}
+            className={`block w-[22px] h-[2px] bg-white/70 rounded-sm transition-all duration-300 ${
+              menuOpen ? "opacity-0 scale-x-0" : ""
+            }`}
           />
           <span
-            className={`block w-[22px] h-[2px] bg-white/70 rounded-sm transition-all duration-300 origin-center ${menuOpen ? "-translate-y-[7px] -rotate-45 !bg-accent" : ""}`}
+            className={`block w-[22px] h-[2px] bg-white/70 rounded-sm transition-all duration-300 origin-center ${
+              menuOpen
+                ? "-translate-y-[7px] -rotate-45 !bg-accent"
+                : ""
+            }`}
           />
         </button>
       </div>
