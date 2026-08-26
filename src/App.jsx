@@ -3,7 +3,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
-import Products from "./pages/Products";
+// import Products from "./pages/Products";
 import Pricing from "./pages/Pricing";
 import Features from "./pages/Features";
 import AboutUs from "./pages/AboutUs";
@@ -21,6 +21,7 @@ import BlogPost6 from "./pages/blog/BlogPost6";
 import { GuestRoute, ProtectedRoute } from "./components/ProtectedRoute";
 import "./index.css";
 
+//WORKFLOW - LIBRARY
 import AdminLibrary from "./pages/AdminLibrary";
 import { AdminRoute } from "./components/AdminRoute";
 import AdminLibraryNew from "./pages/AdminLibraryNew";
@@ -30,6 +31,13 @@ import AdminLibraryVersion from "./pages/AdminLibraryVersion";
 import AdminLibraryEdit from "./pages/AdminLibraryEdit";
 import AdminCategories from "./pages/AdminCategories";
 
+//ADMIN - PRODUCT
+import AdminProducts from "./pages/AdminProducts";
+import AdminProductsNew from "./pages/AdminProductsNew";
+import Downloads from "./pages/Downloads";
+import DownloadDetail from "./pages/DownloadDetail";
+import AdminProductVersion from "./pages/AdminProductVersion";
+
 function App() {
   return (
     <BrowserRouter>
@@ -37,7 +45,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/products" element={<Products />} />
+        {/* <Route path="/products" element={<Products />} /> */}
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/features" element={<Features />} />
         <Route path="/about" element={<AboutUs />} />
@@ -119,6 +127,35 @@ function App() {
         />
         <Route path="/workflows" element={<Workflows />} />
         <Route path="/workflows/:slug" element={<WorkflowDetail />} />
+
+        {/* ADMIN - PRODUCT  */}
+        <Route
+          path="/admin/products"
+          element={
+            <AdminRoute>
+              <AdminProducts />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/products/new"
+          element={
+            <AdminRoute>
+              <AdminProductsNew />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/products/:slug"
+          element={
+            <AdminRoute>
+              <AdminProductVersion />
+            </AdminRoute>
+          }
+        />
+        <Route path="/downloads" element={<Downloads />} />
+        <Route path="/downloads/:slug" element={<DownloadDetail />} />
+
       </Routes>
       <Footer />
     </BrowserRouter>

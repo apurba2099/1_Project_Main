@@ -7,6 +7,7 @@ import { supabase } from "../supabaseClient";
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const [adminMenuOpen, setAdminMenuOpen] = useState(false);
 
   // ── Auth session state ──
   const [user, setUser] = useState(null);
@@ -55,26 +56,25 @@ function Navbar() {
   // Derive a display name: prefer user_metadata.full_name, then first_name, then email prefix
   const displayName = user
     ? user.user_metadata?.full_name ||
-      (user.user_metadata?.first_name
-        ? `${user.user_metadata.first_name} ${user.user_metadata.last_name ?? ""}`.trim()
-        : user.email.split("@")[0])
+    (user.user_metadata?.first_name
+      ? `${user.user_metadata.first_name} ${user.user_metadata.last_name ?? ""}`.trim()
+      : user.email.split("@")[0])
     : null;
 
   // Avatar initials (up to 2 chars)
   const initials = displayName
     ? displayName
-        .split(" ")
-        .map((w) => w[0])
-        .join("")
-        .slice(0, 2)
-        .toUpperCase()
+      .split(" ")
+      .map((w) => w[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase()
     : "??";
 
   const linkClass = ({ isActive }) =>
-    `text-sm font-medium px-4 py-[7px] rounded-full border transition-all duration-200 ${
-      isActive
-        ? "text-white bg-white/[0.08] border-white/[0.08] font-semibold"
-        : "text-white/75 border-transparent hover:text-white hover:bg-white/[0.06] hover:border-white/[0.08]"
+    `text-sm font-medium px-4 py-[7px] rounded-full border transition-all duration-200 ${isActive
+      ? "text-white bg-white/[0.08] border-white/[0.08] font-semibold"
+      : "text-white/75 border-transparent hover:text-white hover:bg-white/[0.06] hover:border-white/[0.08]"
     }`;
 
   return (
@@ -82,7 +82,8 @@ function Navbar() {
       <div className="max-w-site mx-auto px-6 w-full flex items-center justify-between gap-6">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 flex-shrink-0">
-          <div className="w-9 h-9 rounded-full border border-[rgba(0,180,255,0.5)] overflow-hidden flex items-center justify-center bg-[rgba(0,180,255,0.08)]">
+          <div className="w-9 h-9 rounded-full border border-black overflow-hidden flex items-center justify-center bg-black">
+            {/* border border-[rgba(0,180,255,0.5)] bg-[rgba(0,180,255,0.08)] */}
             <img
               src={logoCwm}
               alt="DakshCWM Logo"
@@ -97,20 +98,19 @@ function Navbar() {
           className={`
           fixed md:static top-16 left-0 right-0 md:flex items-center gap-1 flex-1 justify-center
           transition-all duration-300
-          ${
-            menuOpen
+          ${menuOpen
               ? "flex flex-col items-stretch gap-0 bg-[rgba(4,4,10,0.97)] backdrop-blur-xl border-b border-white/[0.08] pb-4 pt-2 z-50"
               : "hidden md:flex"
-          }
+            }
         `}
         >
-        {[
-          "Products:/products",
-          "Library:/workflows",
-          "Pricing:/pricing",
-          "Features:/features",
-          "About Us:/about",
-        ].map((item) => {
+          {[
+            "Pricing:/pricing",
+            "Features:/features",
+            "About Us:/about",
+            "Library:/workflows",
+            "Downloads:/downloads",
+          ].map((item) => {
             const [label, path] = item.split(":");
             return (
               <li key={path}>
@@ -125,15 +125,52 @@ function Navbar() {
             );
           })}
 
+          {/* MENU ADMIN - WORKFLOW/PRODUCT */}
+
           {isAdmin && (
-            <li>
-              <NavLink
-                to="/admin/library"
-                className={linkClass}
-                onClick={() => setMenuOpen(false)}
+            <li className="relative hidden md:block">
+              <button
+                onClick={() => setAdminMenuOpen(!adminMenuOpen)}
+                className={`flex items-center gap-1 ${linkClass({ isActive: false })}`}
               >
                 Admin
-              </NavLink>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform ${adminMenuOpen ? "rotate-180" : ""}`}>
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              {adminMenuOpen && (
+                <div className="absolute top-full left-0 mt-1 bg-[rgba(10,10,20,0.98)] border border-white/10 rounded-lg overflow-hidden min-w-[140px] z-50">
+                  <Link to="/admin/library" className="block px-4 py-2 text-sm text-white/80 hover:bg-white/[0.08]" onClick={() => setAdminMenuOpen(false)}>
+                    Workflow
+                  </Link>
+                  <Link to="/admin/products" className="block px-4 py-2 text-sm text-white/80 hover:bg-white/[0.08]" onClick={() => setAdminMenuOpen(false)}>
+                    Product
+                  </Link>
+                </div>
+              )}
+            </li>
+          )}
+          {isAdmin && (
+            <li className="md:hidden">
+              <button
+                onClick={() => setAdminMenuOpen(!adminMenuOpen)}
+                className={`w-full flex items-center justify-between ${linkClass({ isActive: false })}`}
+              >
+                Admin
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform ${adminMenuOpen ? "rotate-180" : ""}`}>
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              {adminMenuOpen && (
+                <div className="pl-4 mt-1 space-y-1">
+                  <Link to="/admin/library" className="block px-4 py-2 text-sm text-white/70 hover:bg-white/[0.06] rounded-md" onClick={() => { setAdminMenuOpen(false); setMenuOpen(false); }}>
+                    Workflow
+                  </Link>
+                  <Link to="/admin/products" className="block px-4 py-2 text-sm text-white/70 hover:bg-white/[0.06] rounded-md" onClick={() => { setAdminMenuOpen(false); setMenuOpen(false); }}>
+                    Product
+                  </Link>
+                </div>
+              )}
             </li>
           )}
 
@@ -257,23 +294,20 @@ function Navbar() {
           aria-label="Toggle menu"
         >
           <span
-            className={`block w-[22px] h-[2px] bg-white/70 rounded-sm transition-all duration-300 origin-center ${
-              menuOpen
-                ? "translate-y-[7px] rotate-45 !bg-accent"
-                : ""
-            }`}
+            className={`block w-[22px] h-[2px] bg-white/70 rounded-sm transition-all duration-300 origin-center ${menuOpen
+              ? "translate-y-[7px] rotate-45 !bg-accent"
+              : ""
+              }`}
           />
           <span
-            className={`block w-[22px] h-[2px] bg-white/70 rounded-sm transition-all duration-300 ${
-              menuOpen ? "opacity-0 scale-x-0" : ""
-            }`}
+            className={`block w-[22px] h-[2px] bg-white/70 rounded-sm transition-all duration-300 ${menuOpen ? "opacity-0 scale-x-0" : ""
+              }`}
           />
           <span
-            className={`block w-[22px] h-[2px] bg-white/70 rounded-sm transition-all duration-300 origin-center ${
-              menuOpen
-                ? "-translate-y-[7px] -rotate-45 !bg-accent"
-                : ""
-            }`}
+            className={`block w-[22px] h-[2px] bg-white/70 rounded-sm transition-all duration-300 origin-center ${menuOpen
+              ? "-translate-y-[7px] -rotate-45 !bg-accent"
+              : ""
+              }`}
           />
         </button>
       </div>

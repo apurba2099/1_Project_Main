@@ -153,6 +153,7 @@ export default function AdminLibraryEdit() {
                         )}
                         <input type="file" accept="image/png,image/jpeg,image/webp" onChange={(e) => setNewImage(e.target.files[0])}
                             className="w-full text-sm text-muted" />
+                        <p className="text-[11px] text-muted/70 mt-1">Max 2MB (PNG, JPG, WEBP)</p>
                     </div>
 
                     {error && <p className="text-red-400 text-sm">{error}</p>}
